@@ -19,8 +19,9 @@ function App() {
       .map(() => Array(5).fill("")),
   );
   const [showResult, setShowResult] = useState(false);
-  const wordsRef = useRef();
-  const wordRef = useRef();
+  const wordsRef = useRef(null);
+  const wordRef = useRef(null);
+  const buttonRef = useRef(null);
   const [currIndex, setCurrIndex] = useState({
     i: 0,
     j: 0,
@@ -35,7 +36,8 @@ function App() {
 
     let wordss = text.split("/n");
     wordss = wordss[0].split("\n");
-    wordRef.current = wordss[Math.floor(wordss.length * Math.random())].toUpperCase();
+    wordRef.current =
+      wordss[Math.floor(wordss.length * Math.random())].toUpperCase();
     wordsRef.current = wordss;
   };
 
@@ -67,8 +69,7 @@ function App() {
       setCurrIndex((pre) => {
         if (pre.j !== 5) return pre;
         const word = stateRef.current[pre.i].join("").toLowerCase();
-        
-        
+
         if (word === wordRef.current.toLowerCase()) {
           setMatchStatus("WON");
         } else if (pre.i === 5) {
@@ -159,14 +160,23 @@ function App() {
           );
         })}
       </div>
-      <button style={{
-        border: "1px solid white",
-        borderRadius: "20px",
-        padding: "8px",
-        marginTop: "20px",
-        width: "240px",
-        fontSize: "14px"
-      }} onClick={() => setShowResult(!showResult)}>{showResult ? "Hide Result" : "See Result"}</button>
+      <button
+        ref={buttonRef}
+        style={{
+          border: "1px solid white",
+          borderRadius: "20px",
+          padding: "8px",
+          marginTop: "20px",
+          width: "240px",
+          fontSize: "14px",
+        }}
+        onClick={() => {
+          setShowResult(!showResult);
+          buttonRef.current.blur();
+        }}
+      >
+        {showResult ? "Hide Result" : "See Result"}
+      </button>
       {showResult ? <p>{wordRef.current}</p> : null}
     </>
   );
