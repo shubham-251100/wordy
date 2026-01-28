@@ -18,7 +18,7 @@ function App() {
       .fill(0)
       .map(() => Array(5).fill("")),
   );
-
+  const [showResult, setShowResult] = useState(false);
   const wordsRef = useRef();
   const wordRef = useRef();
   const [currIndex, setCurrIndex] = useState({
@@ -115,6 +115,7 @@ function App() {
 
   return (
     <>
+      <h2>Wrodle</h2>
       <div>
         {state.map((item, index) => {
           return (
@@ -158,6 +159,15 @@ function App() {
           );
         })}
       </div>
+      <button style={{
+        border: "1px solid white",
+        borderRadius: "20px",
+        padding: "8px",
+        marginTop: "20px",
+        width: "240px",
+        fontSize: "14px"
+      }} onClick={() => setShowResult(!showResult)}>{showResult ? "Hide Result" : "See Result"}</button>
+      {showResult ? <p>{wordRef.current}</p> : null}
     </>
   );
 }
